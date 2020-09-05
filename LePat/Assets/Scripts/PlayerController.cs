@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     [HideInInspector]
     public float curHatTime;
+    public bool isDead = false;
 
     [Header("Components")]
     public Rigidbody rb;

@@ -108,9 +108,25 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         playerDied = true;
         deadPlayers++;
-        Debug.Log(deadPlayers);
+
         PlayerController player = GetPlayer(playerId);
-        
+        player.isDead = true;
+
+        // if player has hat, pass it off to another player
+        if (playerId == playerWithHat)
+        {
+            for (int x = 0; x < players.Length; ++x)
+            {
+                if (players[x] != null)
+                {
+                    PlayerController p = GetPlayer(players[x].id);
+                    if (!p.isDead)
+                    {
+                        GiveHat(p.id, true);
+                    }
+                }
+            }
+        }
 
         // turn player off
         player.rb.gameObject.SetActive(false);

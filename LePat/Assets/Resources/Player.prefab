@@ -169,6 +169,7 @@ MonoBehaviour:
   jumpForce: 6
   hatObject: {fileID: 2240115402447780799}
   curHatTime: 0
+  isDead: 0
   rb: {fileID: 7276335082569601080}
 --- !u!1 &2240115402447780799
 GameObject:
