@@ -139,6 +139,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         gameEnded = true;
         PlayerController player = GetPlayer(playerId);
 
+        if (player.isDead)
+        {
+            return;
+        }
+
         // set the UI to show who's won
         GameUI.instance.SetWinText(player.photonPlayer.NickName);
 
