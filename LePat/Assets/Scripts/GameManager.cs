@@ -106,33 +106,31 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void LoseGame (int playerId)
     {
-        playerDied = true;
-        deadPlayers++;
+        deadPlayers++; // increment number of players that are dead to track when game is over
 
-        PlayerController player = GetPlayer(playerId);
-        player.isDead = true;
+        PlayerController player = GetPlayer(playerId); // get id of player that lost
+        player.isDead = true; // change their isDead bool
+        player.rb.gameObject.SetActive(false); // turn player off
+
+        // Update player list
+        GameUI.instance.UpdatePlayerDiedUI(playerId);
 
         // if player has hat, pass it off to another player
         if (playerId == playerWithHat)
         {
-            for (int x = 0; x < players.Length; ++x)
+            for (int x = 0; x < players.Length; ++x) // loop through all players
             {
-                if (players[x] != null)
+                if (!gameEnded && players[x] != null) // if game hasn't ended
                 {
-                    PlayerController p = GetPlayer(players[x].id);
-                    if (!p.isDead)
-                    {
-                        GiveHat(p.id, true);
+                    PlayerController p = GetPlayer(players[x].id); // get PlayerController for next player in loop
+                    if (!p.isDead) // if they're alive
+                    { 
+                        GiveHat(p.id, true); // give them the hat
+                        return; // and exit the loop
                     }
                 }
             }
         }
-
-        // turn player off
-        player.rb.gameObject.SetActive(false);
-
-        // Update player list
-        GameUI.instance.UpdatePlayerDiedUI(playerId);
     }
 
     [PunRPC]

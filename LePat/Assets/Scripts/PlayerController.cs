@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
     [HideInInspector]
     public int id;
+    public int totalPlayers;
 
     [Header("Info")]
     public float moveSpeed;
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     public void Initialize(Player player)
     {
         photonPlayer = player;
+        totalPlayers++;
         id = player.ActorNumber;
 
         GameManager.instance.players[id - 1] = this;
@@ -65,38 +67,26 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             }
         }
 
-        /* the host will check if player has won
-        if (PhotonNetwork.IsMasterClient)
-        {
-            if (curHatTime >= GameManager.instance.timeToLose &&
-                !GameManager.instance.gameEnded)
-            {
-                GameManager.instance.gameEnded = true;
-                GameManager.instance.photonView.RPC("WinGame", RpcTarget.All, id);
-            }
-        }*/
-
         // the host will check if player has lost
         if (PhotonNetwork.IsMasterClient)
         {
-            if (curHatTime >= GameManager.instance.timeToLose &&
-                !GameManager.instance.playerDied)
+            if (curHatTime >= GameManager.instance.timeToLose && !GameManager.instance.gameEnded)
             {
-                GameManager.instance.playerDied = true;
-
                 GameManager.instance.photonView.RPC("LoseGame", RpcTarget.All, id);
             }
         }
 
-        // the host will check if the player has won
+        // the host will check if player has won
         if (PhotonNetwork.IsMasterClient)
         {
-            if (GameManager.instance.deadPlayers ==
-                (GameManager.instance.playersInGame - 1) &&
-                !GameManager.instance.gameEnded)
+            if (GameManager.instance.deadPlayers == (totalPlayers - 1)
+                && !GameManager.instance.gameEnded)
             {
-                GameManager.instance.gameEnded = true;
-                GameManager.instance.photonView.RPC("WinGame", RpcTarget.All, id);
+                if (photonView.IsMine && !isDead)
+                {
+                    GameManager.instance.gameEnded = true;
+                    GameManager.instance.photonView.RPC("WinGame", RpcTarget.All, id);
+                }
             }
         }
     }
