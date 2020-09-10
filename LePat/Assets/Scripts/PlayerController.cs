@@ -82,8 +82,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             if (GameManager.instance.deadPlayers == (totalPlayers - 1)
                 && !GameManager.instance.gameEnded)
             {
-                    GameManager.instance.gameEnded = true;
-                    GameManager.instance.photonView.RPC("WinGame", RpcTarget.All, id);
+                    GameManager.instance.photonView.RPC("WinGame", RpcTarget.All, id, false);
             }
         }
     }
