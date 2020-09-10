@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void LoseGame (int playerId)
+    public void LoseGame (int playerId)
     {
         deadPlayers++; // increment number of players that are dead to track when game is over
 
@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void WinGame (int playerId)
+    public void WinGame (int playerId)
     {
         gameEnded = true;
         PlayerController player = GetPlayer(playerId);
