@@ -79,11 +79,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         // the host will check if player has won
         if (PhotonNetwork.IsMasterClient && (Time.realtimeSinceStartup > 5))
         {
-            if (!isDead && (GameManager.instance.deadPlayers == (totalPlayers - 1))
-                && !GameManager.instance.gameEnded)
-            {
-                GameManager.instance.photonView.RPC("WinGame", RpcTarget.All, id);
-            }
+            /* if (!isDead && (GameManager.instance.deadPlayers == (totalPlayers - 1))
+                 && !GameManager.instance.gameEnded)
+             {
+                 GameManager.instance.photonView.RPC("WinGame", RpcTarget.All, id);
+             }*/
+            Debug.Log("Win condition met");
         }
     }
 
