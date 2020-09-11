@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public float invincibleDuration;        //how long after a player gets the hat, they are invincible
     private float hatPickupTime;            //the time the hat was picked up by current holder
     public bool playerDied = false;         //has the player run out of time?
-    public int deadPlayers;                 //keep track of how many players have died
+    public int deadPlayers = 0;                 //keep track of how many players have died
 
     [Header("Player")]
     public string playerPrefabLocation;     //path in Resources folder to Player prefab
