@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public Transform[] spawnPoints;           //array of all available spawn points
     public PlayerController[] players;      //array of all the players
     public int playerWithHat;               //id of player with the hat
-    public int playersInGame;              //number of players in the game
+    private int playersInGame;              //number of players in the game
 
     //instance
     public static GameManager instance;

@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         // the host will check if player has won
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient && (Time.realtimeSinceStartup > 5))
         {
             if (!isDead && (GameManager.instance.deadPlayers == (totalPlayers - 1))
                 && !GameManager.instance.gameEnded)
